@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+set<vector<int> > seti;
+vector<int> vec,Container;
+int n,sumi,num;
+
+void solve(int pos, int sum){
+
+if(sum==sumi){
+seti.insert(Container);
+return;
+}
+
+for(int i=pos; i<n;i++){
+	if(sum+vec[i]<=sumi){
+		sum+=vec[i];
+		Container.push_back(vec[i]);
+
+		solve(i+1,sum);
+
+		sum-=vec[i];
+		Container.pop_back();
+	}
+}
+}
+int main() {
+while(cin>>sumi>>n && sumi && n){
+vec.clear();
+seti.clear();	
+ for(int i=0; i<n; i++){
+    cin>>num;
+    vec.push_back(num);
+ }
+ cout<<"Sums of "<<sumi<<":"<<endl;
+solve(0,0);
+if(seti.size()==0)cout<<"NONE"<<endl; 
+for(auto ii=seti.rbegin(); ii!=seti.rend(); ++ii){
+   vector <int> inVect = *ii;
+   for (unsigned j=0; j<inVect.size(); j++){
+       cout << inVect[j];
+       if(j!=inVect.size()-1) cout<<'+';
+   }
+   cout << endl;
+}
+}
+}
