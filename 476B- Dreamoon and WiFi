@@ -1,0 +1,64 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+string base,sec,neu;
+int lenth,pos,l,pro1(0),pro2(0),tpro2(0),flag(0),co(0);
+double a,siz,c;
+vector<string> vec;
+vector<int> ans;
+
+void solve(int len, string str){
+
+  if(len==0) {vec.push_back(str); return;}
+  
+  solve(len-1, str+'+');
+  solve(len-1, str+'-');
+}
+
+
+int main(){
+cin>>base>>sec;
+lenth=base.length();
+for(int i=0; i<lenth; i++)
+	if(sec[i]!='?') neu+=sec[i];
+	else {flag=1;}
+	
+for(int i=0; i<base.length(); i++) 
+if(base[i]=='+') pro1++; else if (base[i]=='-') pro1--;
+
+
+// if there's no ?
+if(!flag){
+for(int i=0; i<sec.length(); i++) 
+if(sec[i]=='+') pro2++; else if(sec[i]=='-') pro2--;
+
+if(pro1==pro2) a=1; else a=0;
+printf("%.12f\n", a);
+return 0;
+}
+
+// if there's
+for(int i=0; i<neu.length(); i++) 
+if(neu[i]=='+') pro2++; else if(neu[i]=='-') pro2--;
+
+l=lenth-(neu.length());
+solve(l,"");
+
+	
+for(int i=0; i<vec.size(); i++){
+	string temp=vec[i];
+	tpro2=0;
+	for(int j=0; j<temp.length(); j++){
+	 if(temp[j]=='+') tpro2++; else tpro2--;
+}
+ans.push_back(tpro2+pro2);
+}
+
+for(int i=0; i<ans.size(); i++) if(ans[i]==pro1) co++;
+
+siz=ans.size(); c=(double)co;
+if(co==0) a=0; else a=co/siz; 
+printf("%.12f\n", a) ;
+
+}
