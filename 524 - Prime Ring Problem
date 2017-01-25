@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n,co(0);
+int arr[20]={1};
+
+bool isPrime(int num){
+for(int i=2; i<=sqrt(num);i++)
+	if(num%i==0) return false;
+return true;
+}
+
+void solve(int pos,bool vis[]){
+if(pos==n){
+	if(!isPrime(1+arr[n-1])) return;
+		cout<<1<<" ";
+	for(int i=1; i<n; i++)
+	    	cout<<arr[i]<<" ";
+	    cout<<endl;
+	return;
+}
+for(int i=2; i<=n; i++){
+	if(!vis[i] && isPrime(i+arr[pos-1])){
+		vis[i]=true;
+		arr[pos]=i;
+		solve(pos+1,vis);
+		vis[i]=false;
+	}
+	
+}
+	
+}
+int main()
+{
+	while(1){
+	cin>>n;	
+    if(cin.fail()) break;
+    if(co++) cout<<endl;
+    cout<<"Case "<<co<<":"<<endl;
+    bool vis[20]={0};
+    solve(1,vis);
+	}
+}
