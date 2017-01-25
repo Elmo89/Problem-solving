@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int row,col,cn(0);
+char arr[5+3][5+3];
+
+struct node{
+char chr;
+int count;
+} p[2600];
+
+void solve(int r, int c, char chrr)
+{   
+    if(r<0 || c<0|| r==row ||c==col || arr[r][c]!=chrr) return; 
+     
+     cn++;
+     arr[r][c]='.';
+     
+    solve(r+1,c,chrr);
+    solve(r,c+1,chrr);
+    solve(r-1,c,chrr);
+    solve(r,c-1,chrr);
+}
+bool cmp (node x, node y)
+{
+    if ( x.count > y.count ) return true;
+    if ( x.count == y.count && x.chr < y.chr ) return true;
+ 
+    return false;
+}
+
+int main()
+{
+    while(cin>>row>>col && row && col)
+    
+    {   
+    	int casei=0;
+        for(int i=0;i<row;i++)
+          scanf ("%s", arr[i]);
+            
+            int pos=0;
+            for(int i=0;i<row;i++){
+              for(int j=0;j<col;j++){
+              	if(arr[i][j]!='.'){
+              		 cn=0;
+              		p[pos].chr=arr[i][j];
+              		solve(i,j,arr[i][j]);
+              		p[pos++].count=cn;
+              	}
+            }
+            }
+         sort(p,p+pos, cmp);  
+        cout<<"Problem "<<++casei<<":"<<endl; 
+       for(int i=0; i<pos; i++)
+       	cout<<p[i].chr<<" "<<p[i].count<<endl;
+            
+    }
+    return 0;
+}
